@@ -1,8 +1,8 @@
 <template>
-    <div>
+  
     
 <buy-topup></buy-topup>
-    </div>
+    
 </template>
 
 <script>

@@ -1,6 +1,5 @@
 <template>
-  <v-footer>
-    <v-bottom-navigation v-model="value" :background-color="color" dark shift fixed app>
+    <v-bottom-navigation v-model="value" :background-color="color" dark shift fixed >
       
       <v-btn to="/home">
         <span>Home</span>
@@ -15,18 +14,18 @@
       </v-btn>
 
       <v-btn  to="/invoice">
-        <span>Invoice</span>
+        <span>History</span>
 
         <v-icon>mdi-receipt</v-icon>
       </v-btn>
 
-      <v-btn  to="/account">
+      <v-btn  to="/user">
         <span>Account</span>
 
         <v-icon>mdi-account-circle</v-icon>
       </v-btn>
     </v-bottom-navigation>
-  </v-footer>
+  
 </template>
 
 <script>
