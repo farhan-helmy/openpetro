@@ -7,7 +7,8 @@ export default {
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
-        user: {}
+        customer: [],
+        customerdata: []
     },
     mutations: authMutations,
     actions: authActions,

@@ -19,7 +19,7 @@
         <v-icon>mdi-receipt</v-icon>
       </v-btn>
 
-      <v-btn  to="/user">
+      <v-btn  to="/account">
         <span>Account</span>
 
         <v-icon>mdi-account-circle</v-icon>

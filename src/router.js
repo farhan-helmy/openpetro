@@ -6,7 +6,7 @@ import Topup from './views/Topup'
 import Home from './views/Home'
 import Account from './views/Account'
 import Invoice from './views/Invoice'
-import store from './store'
+
 
 Vue.use(Router)
 //import Home from '../views/Home.vue'
@@ -16,7 +16,10 @@ let router = new Router({
   routes: [{
       path: '/home',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/',
@@ -37,30 +40,41 @@ let router = new Router({
       path: '/topup',
       name: 'topup',
       component: Topup,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/account',
-      name: 'acount',
-      component: Account
+      name: 'account',
+      component: Account,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/invoice',
       name: 'invoice',
-      component: Invoice
+      component: Invoice,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn) {
-      next()
-      return
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.getItem("token") == null) {
+      next({
+        path: "/home"
+      });
+    } else {
+      next();
     }
-    next('/login')
   } else {
-    next()
+    next();
   }
-})
+});
 
 export default router;
