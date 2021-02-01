@@ -6,5 +6,11 @@
   </v-row>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    buyFuel() {
+      this.$router.push({ path: 'buyfuel', query: { id: 1234 } })
+    }
+  }
+};
 </script>

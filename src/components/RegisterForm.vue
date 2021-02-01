@@ -82,6 +82,7 @@
 
 <script>
 import RoundIcon from "./animation/Round";
+import Auth from "@/services/Auth";
 export default {
   components: {
     RoundIcon,
@@ -119,14 +120,10 @@ export default {
         this.$refs[f].reset();
       });
     },
-    submit() {
-      this.formHasErrors = false;
-
-      Object.keys(this.form).forEach((f) => {
-        if (!this.form[f]) this.formHasErrors = true;
-
-        this.$refs[f].validate(true);
-      });
+    async submit() {
+      const formData = new FormData()
+      formData.append('')
+        Auth.register      
     },
   },
 };

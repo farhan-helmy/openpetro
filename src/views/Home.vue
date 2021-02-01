@@ -1,9 +1,5 @@
 <template>
-  
-    
    <buy-fuel></buy-fuel>
-   
-  
 </template>
 
 <script>

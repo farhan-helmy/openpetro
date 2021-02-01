@@ -3,9 +3,11 @@
       <transition>
       <router-view></router-view>
       </transition>
-      <v-footer app>
+      <span v-if="isLoggedIn">
+       <v-footer app>
       <footer-nav></footer-nav>
       </v-footer>
+      </span>
   </v-app>
 </template>
 
