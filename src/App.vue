@@ -13,11 +13,16 @@
 
 <script>
 import FooterNav from '@/components/FooterNav';
+import { mapGetters } from 'vuex';
+
 export default {
   components:{
     FooterNav
   },
   computed:{
+    ...mapGetters('auth',[
+      'isLoggedIn'
+    ]),
     theme(){
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
     }

@@ -15,7 +15,7 @@
         </v-card-title>
 
         <v-card-text>
-          <form action="" @submit.prevent="login">
+          <form @submit.prevent="loginAction">
             <v-text-field
               v-model="email"
               label="E-mail"
@@ -67,13 +67,13 @@ export default {
     RoundIcon,
   },
   methods: {
-  ...mapActions([
-      'auth/login', //also supports payload `this.nameOfAction(amount)` 
+  ...mapActions('auth',[
+      'login', //also supports payload `this.nameOfAction(amount)` 
     ]),
-     login: function () {
+     loginAction() {
         let email = this.email
         let password = this.password
-        this.login(email,password)
+        this.login({email,password})
        .then(() => this.$router.push('/home'))
        .catch(err => console.log(err))
       }

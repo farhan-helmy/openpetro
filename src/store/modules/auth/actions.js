@@ -1,8 +1,10 @@
+import axios from 'axios'
+
 export default {
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios({url: 'http://localhost:3000/login', data: user, method: 'POST' })
+          axios({url: 'http://localhost:3000/customers/login', data: user, method: 'POST' })
           .then(resp => {
             const token = resp.data.token
             const user = resp.data.user
@@ -38,7 +40,7 @@ export default {
         })
       },
       logout({commit}){
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           commit('logout')
           localStorage.removeItem('token')
           delete axios.defaults.headers.common['Authorization']
