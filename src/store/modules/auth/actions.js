@@ -11,7 +11,7 @@ export default {
             const customer = resp.data.customer
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, customer)
+            commit('auth_success', {token, customer})
             resolve(resp)
           })
           .catch(err => {
@@ -30,7 +30,7 @@ export default {
             const customer = resp.data.customer
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, customer)
+            commit('auth_success', {token, customer})
             resolve(resp)
           })
           .catch(err => {
@@ -49,20 +49,21 @@ export default {
         })
       },
 
-      getCustomer({commit}){
-        let token = localStorage.getItem('token')
-        axios.get('http://localhost:3000/customers/me',{
-          headers: {
-            'Authorization': 'Bearer ' + token
-          }
-        })
-        .then((res) => {
-          commit('customerdata', res.data)
-          console.log(res.data)
-        })
-        .catch((error) => {
-          console.error(error)
+      getUsers({commit}){
+        //let token = localStorage.getItem('token')
+        return new Promise((resolve, reject) => {
+            axios.get('http://localhost:3000/customers/me')
+            .then(resp => {
+              console.log(resp.data)
+              const datacustomer = resp.data
+              commit('customerdata', {datacustomer})
+              resolve(resp)
+            })
+            .catch(err => {
+              console.log(err)
+              commit('auth_error', err)
+              reject(err)
+            })
         })
       }
-
-}
+    }

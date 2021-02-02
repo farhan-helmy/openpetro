@@ -3,5 +3,5 @@ export default {
     authStatus: state => state.status,
     token: state => state.token,
     customer: state => state.customer,
-    customerdata: state => state.customerdata
+    customerdata: state => state.datacustomer
 }
