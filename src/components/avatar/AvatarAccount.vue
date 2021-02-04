@@ -9,7 +9,7 @@
           <v-list-item color="rgba(0, 0, 0, .4)" dark>
             <v-list-item-content>
               <v-list-item-title class="title">
-                  {{customerInfo.name}}
+                {{ customerInfo.name }}
               </v-list-item-title>
               <v-list-item-subtitle>{{
                 customerInfo.email
@@ -39,12 +39,12 @@ export default {
     },
   },
   mounted() {
-     this.getUsers()
-        .then(() => console.log('done'))
-        .catch((err) => console.log(err));
+    this.getUsers()
+      .then(() => console.log("done"))
+      .catch((err) => console.log(err));
   },
   methods: {
-    ...mapActions("auth",["getUsers"]),
+    ...mapActions("auth", ["getUsers"]),
   },
 };
 </script>

@@ -3,7 +3,7 @@
       <transition>
       <router-view></router-view>
       </transition>
-      <span v-if="isLoggedIn">
+      <span v-if="isLoggedIn && $route.name!=='buyfuel' && $route.name!=='login' && $route.name!=='loading' && $route.name!=='register'">
        <v-footer app>
       <footer-nav></footer-nav>
       </v-footer>

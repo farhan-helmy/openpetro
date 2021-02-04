@@ -16,5 +16,8 @@ export default {
       },
       customerdata(state, {datacustomer}){
         state.datacustomer = datacustomer
+      },
+      hide_navs(state){
+        state.status = ''
       }
 }

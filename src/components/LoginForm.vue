@@ -25,6 +25,7 @@
             <v-text-field
               v-model="password"
               label="Password"
+               type="password"
               prepend-icon="mdi-lock"
             />
             <v-row justify="center">

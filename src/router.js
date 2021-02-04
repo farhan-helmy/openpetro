@@ -6,6 +6,8 @@ import Topup from './views/Topup'
 import Home from './views/Home'
 import Account from './views/Account'
 import Invoice from './views/Invoice'
+import BuyFuelPage from './views/BuyFuelPage'
+import LoadingPage from './views/loading/LoadingPage'
 
 
 Vue.use(Router)
@@ -17,7 +19,7 @@ let router = new Router({
       path: '/home',
       name: 'home',
       component: Home,
-      meta: {
+      meta:{
         requiresAuth: true
       }
     },
@@ -39,26 +41,27 @@ let router = new Router({
     {
       path: '/topup',
       name: 'topup',
-      component: Topup,
-      meta: {
-        requiresAuth: true
-      }
+      component: Topup
     },
     {
       path: '/account',
       name: 'account',
-      component: Account,
-      meta: {
-        requiresAuth: true
-      }
+      component: Account
     },
     {
       path: '/invoice',
       name: 'invoice',
-      component: Invoice,
-      meta: {
-        requiresAuth: true
-      }
+      component: Invoice
+    },
+    {
+      path: '/buyfuel',
+      name: 'buyfuel',
+      component: BuyFuelPage
+    },
+    {
+      path: '/loading',
+      name: 'loading',
+      component: LoadingPage
     }
   ]
 })

@@ -65,5 +65,8 @@ export default {
               reject(err)
             })
         })
+      },
+      hideNav({commit}){
+        commit('hide_navs')
       }
     }
