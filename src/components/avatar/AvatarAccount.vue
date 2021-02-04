@@ -18,7 +18,7 @@
                 customerInfo.icno
               }}</v-list-item-subtitle>
               <v-list-item-subtitle>{{
-                customerInfo.updatedAt
+                customerInfo.createdAt
               }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>

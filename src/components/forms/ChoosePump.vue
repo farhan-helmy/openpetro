@@ -2,7 +2,7 @@
   <div>
     <div>
       <v-sheet class="mx-auto" elevation="8" max-width="800">
-        <v-slide-group v-model="model" class="pa-4" show-arrows>
+        <v-slide-group v-model="pumpno" class="pa-4" show-arrows>
           <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
             <v-card
               :color="active ? 'primary' : 'grey lighten-1'"
@@ -27,41 +27,53 @@
         </v-slide-group>
 
         <v-expand-transition>
-          <v-sheet v-if="model != null" height="150" tile>
+          <v-sheet v-if="pumpno != null" height="300" tile>
             <v-row class="fill-height" align="center" justify="center">
               <v-col cols="10" class="py-2">
                 <p>AMOUNT (RM)</p>
+                <v-slide-group>
+                  <v-btn-toggle v-model="amount" borderless>
+                    <v-btn value="20"> RM 20 </v-btn>
 
-                <v-btn-toggle v-model="icon" borderless>
-                  <v-btn value="20">
-                    RM 20
-                  </v-btn>
+                    <v-btn value="40">
+                      <span class="hidden-sm-and-down">Center</span>
 
-                  <v-btn value="40">
+                      RM 40
+                    </v-btn>
+
+                    <v-btn value="60">
+                      <span class="hidden-sm-and-down">Right</span>
+
+                      RM 60
+                    </v-btn>
+
+                    <v-btn value="80">
+                      <span class="hidden-sm-and-down">Justify</span>
+
+                      RM 80
+                    </v-btn>
+                    <v-btn value="100">
+                      <span class="hidden-sm-and-down">Justify</span>
+
+                      RM 100
+                    </v-btn>
+                  </v-btn-toggle>
+                </v-slide-group>
+              </v-col>
+              <v-col cols="10" class="py-2">
+                <p>Fuel Type</p>
+
+                <v-btn-toggle v-model="fueltype" borderless>
+                  <v-btn value="RON97" color="green"> RON97 </v-btn>
+
+                  <v-btn value="RON95" color="yellow">
                     <span class="hidden-sm-and-down">Center</span>
 
-                     RM 40 
-                  </v-btn>
-
-                  <v-btn value="60">
-                    <span class="hidden-sm-and-down">Right</span>
-
-                   RM 60 
-                  </v-btn>
-
-                  <v-btn value="80">
-                    <span class="hidden-sm-and-down">Justify</span>
-
-                    RM 80
-                  </v-btn>
-                    <v-btn value="100">
-                    <span class="hidden-sm-and-down">Justify</span>
-
-                    RM 100
+                    RON95
                   </v-btn>
                 </v-btn-toggle>
               </v-col>
-              <h3 class="title">Pump {{ model + 1 }} Drive Safe!</h3>
+              <h3 class="title">Pump {{ pumpno + 1 }} Drive Safe!</h3>
             </v-row>
           </v-sheet>
         </v-expand-transition>
@@ -73,43 +85,41 @@
       </v-row>
     </div>
     <div>
-<v-footer
-    color="primary lighten-1"
-    app
-  >
-    <v-row
-      justify="center"
-      no-gutters
-    >
-      <v-btn
-      x-large
-      color="primary"
-      dark
-      @click="goLoading"
-    >
-      PAY . RM {{this.icon}}
-    </v-btn>
-    </v-row>
-  </v-footer>
+      <v-footer color="primary lighten-1" app>
+        <v-row justify="center" no-gutters>
+          <v-btn x-large color="primary" dark @click="goPay">
+            PAY . RM {{ this.amount }}
+          </v-btn>
+        </v-row>
+      </v-footer>
     </div>
   </div>
-  
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   data: () => ({
-    model: null,
+    pumpno: null,
     text: "center",
-    icon: "",
+    amount: "",
     toggle_none: null,
     toggle_one: 0,
     toggle_exclusive: 1,
     toggle_multiple: [0, 1, 2],
+    fueltype: "",
   }),
-   methods: {
-    goLoading() {
-      this.$router.push("loading");
+  methods: {
+    ...mapActions('payment',[
+      'pay'
+    ]),
+    goPay() {
+      let fuel_pump_no = this.pumpno + 1
+      let fuel_amount = this.amount
+      let fuel_type = this.fueltype
+      this.pay({fuel_pump_no,fuel_amount,fuel_type})
+      .then(() => this.$router.push("loading"))
+      .catch(err => console.log(err))
     },
   },
 };

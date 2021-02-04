@@ -1,12 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 Vue.use(Vuex)
 
-import authModule from './modules/auth/index.js';
+import authModule from './modules/auth/index.js'
+import paymentModule from './modules/payment/index.js'
 
 const store = new Vuex.Store({
     modules: {
-        auth: authModule
+        auth: authModule,
+        payment: paymentModule
     },
    
 });

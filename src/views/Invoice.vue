@@ -25,11 +25,11 @@ import axios from 'axios'
           {
             text: 'Date',
             align: 'start',
-            sortable: false,
+            sortable: true,
             value: 'createdAt',
           },
           { text: 'Price (RM)', value: 'price' },
-          { text: 'Fuel Type', value: 'fuel_type' }
+          { text: 'Fuel Type', value: 'fuel_type', sortable: false }
         ],
       }
     },
