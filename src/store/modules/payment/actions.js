@@ -18,6 +18,19 @@ export default {
           })
         })
     },
+    updateBalance(topbal){
+        return new Promise((resolve, reject) => {
+          axios({url: 'http://localhost:3000/customers/topup', data: topbal, method: 'PATCH'})
+          .then(resp => {
+            console.log(resp.data)
+            resolve(resp)
+          })
+          .catch(err => {
+            console.log(err)
+            reject(err)
+          })
+        })
+    }
     // getTransactions({commit}){
     //   //let token = localStorage.getItem('token')
     //   return new Promise((resolve, reject) => {

@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 const gradients = [
   ["#222"],
   ["#42b3f4"],
@@ -43,19 +44,41 @@ export default {
     fill: false,
     type: "trend",
     autoLineWidth: false,
+    // balance: this.customerInfo.$numberDecimal
   }),
-  mounted(){
+  computed: {
+    ...mapGetters("auth", ["customerdata"]),
+    customerInfo() {
+      return this.customerdata.topup_balance;
+    },
+  },
+  mounted() {
+    this.getUsers(),
     this.timeOut()
+    
   },
   methods: {
+    ...mapActions("auth", ["getUsers"]),
+    ...mapActions("payment", ["updateBalance"]),
     nextPage() {
       this.$router.push("invoiceview");
     },
     timeOut() {
-      setTimeout(() => {
-        this.nextPage();
-      }, 1000);
+      this.getUsers()
+        .then(() =>{
+          let topup_balance = this.customerInfo.$numberDecimal - this.$route.query.fuel_amount
+          console.log({topup_balance})
+          this.updateBalance({topup_balance})
+          .then(() => setTimeout(() => {
+            this.nextPage();
+          }, 1000))
+          .catch(err => console.log(err))     
+       })
+        .catch((err) => console.log(err));
     },
   },
 };
 </script>
+
+
+

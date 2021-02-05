@@ -118,7 +118,7 @@ export default {
       let fuel_amount = this.amount
       let fuel_type = this.fueltype
       this.pay({fuel_pump_no,fuel_amount,fuel_type})
-      .then(() => this.$router.push("loading"))
+      .then(() => this.$router.push({ path: 'loading', query: { fuel_amount: this.amount }}))
       .catch(err => console.log(err))
     },
   },
