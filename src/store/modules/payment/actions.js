@@ -26,7 +26,7 @@ export default {
             resolve(resp)
           })
           .catch(err => {
-            console.log(err)
+            console.log(err.body)
             reject(err)
           })
         })

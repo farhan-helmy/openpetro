@@ -53,19 +53,16 @@ export default {
     },
   },
   mounted() {
-    this.getUsers(),
     this.timeOut()
     
   },
   methods: {
-    ...mapActions("auth", ["getUsers"]),
+    // ...mapActions("auth", ["getUsers"]),
     ...mapActions("payment", ["updateBalance"]),
     nextPage() {
       this.$router.push("invoiceview");
     },
     timeOut() {
-      this.getUsers()
-        .then(() =>{
           let topup_balance = this.customerInfo.$numberDecimal - this.$route.query.fuel_amount
           console.log({topup_balance})
           this.updateBalance({topup_balance})
@@ -73,9 +70,7 @@ export default {
             this.nextPage();
           }, 1000))
           .catch(err => console.log(err))     
-       })
-        .catch((err) => console.log(err));
-    },
+       }
   },
 };
 </script>

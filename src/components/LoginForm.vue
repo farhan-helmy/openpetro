@@ -74,6 +74,7 @@ export default {
      loginAction() {
         let email = this.email
         let password = this.password
+        console.log({email,password})
         this.login({email,password})
        .then(() => this.$router.push('/home'))
        .catch(err => console.log(err))
