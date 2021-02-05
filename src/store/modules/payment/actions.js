@@ -9,6 +9,7 @@ export default {
             console.log(resp.data)
             const transaction = resp.data
             commit('payment_data', {transaction})
+            //nama kena sama dengan mutations
             resolve(resp)
           })
           .catch(err => {
@@ -17,4 +18,21 @@ export default {
           })
         })
     },
-}
+    // getTransactions({commit}){
+    //   //let token = localStorage.getItem('token')
+    //   return new Promise((resolve, reject) => {
+    //       axios.get('http://localhost:3000/transactions')
+    //       .then(resp => {
+    //         console.log(resp.data)
+    //         const datatransaction = resp.data
+    //         commit('transaction_data', [datatransaction])
+    //         resolve(resp)
+    //       })
+    //       .catch(err => {
+    //         console.log(err)
+    //         commit('payment_error', err)
+    //         reject(err)
+    //       })
+    //   })
+    // },
+  }

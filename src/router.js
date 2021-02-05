@@ -8,6 +8,7 @@ import Account from './views/Account'
 import Invoice from './views/Invoice'
 import BuyFuelPage from './views/BuyFuelPage'
 import LoadingPage from './views/loading/LoadingPage'
+import InvoiceView from './views/InvoiceView'
 
 
 Vue.use(Router)
@@ -62,6 +63,11 @@ let router = new Router({
       path: '/loading',
       name: 'loading',
       component: LoadingPage
+    },
+    {
+      path: '/invoiceview',
+      name: 'invoiceview',
+      component: InvoiceView
     }
   ]
 })

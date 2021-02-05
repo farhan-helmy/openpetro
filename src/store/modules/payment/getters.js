@@ -1,5 +1,6 @@
 export default {
     token: state => state.token,
     paymentStatus: state => state.status,
-    paymentData: state => state.datapayment
+    //paymentData: state => state.datapayment,
+    datapayment: state => state.payment
 }
