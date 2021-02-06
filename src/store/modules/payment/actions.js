@@ -18,19 +18,22 @@ export default {
           })
         })
     },
-    updateBalance(topbal){
-        return new Promise((resolve, reject) => {
-          axios({url: 'http://localhost:3000/customers/topup', data: topbal, method: 'PATCH'})
-          .then(resp => {
-            console.log(resp.data)
-            resolve(resp)
-          })
-          .catch(err => {
-            console.log(err.body)
-            reject(err)
-          })
+    topupWallet({commit}, topupamount){
+      return new Promise((resolve, reject) => {
+        commit('topup_request')
+        axios({url: 'http://localhost:3000/customers/topup', data: topupamount, method: 'PATCH' })
+        .then(resp => {
+          console.log(resp.data)
+          //nama kena sama dengan mutations
+          resolve(resp)
         })
+        .catch(err => {
+          commit('payment_error')
+          reject(err)
+        })
+      })
     }
+   
     // getTransactions({commit}){
     //   //let token = localStorage.getItem('token')
     //   return new Promise((resolve, reject) => {
@@ -48,4 +51,5 @@ export default {
     //       })
     //   })
     // },
+
   }

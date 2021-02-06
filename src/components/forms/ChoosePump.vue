@@ -36,24 +36,24 @@
                     <v-btn value="20"> RM 20 </v-btn>
 
                     <v-btn value="40">
-                      <span class="hidden-sm-and-down">Center</span>
+                      <span class="hidden-sm-and-down"></span>
 
                       RM 40
                     </v-btn>
 
                     <v-btn value="60">
-                      <span class="hidden-sm-and-down">Right</span>
+                      <span class="hidden-sm-and-down"></span>
 
                       RM 60
                     </v-btn>
 
                     <v-btn value="80">
-                      <span class="hidden-sm-and-down">Justify</span>
+                      <span class="hidden-sm-and-down"></span>
 
                       RM 80
                     </v-btn>
                     <v-btn value="100">
-                      <span class="hidden-sm-and-down">Justify</span>
+                      <span class="hidden-sm-and-down"></span>
 
                       RM 100
                     </v-btn>
@@ -67,7 +67,7 @@
                   <v-btn value="RON97" color="green"> RON97 </v-btn>
 
                   <v-btn value="RON95" color="yellow">
-                    <span class="hidden-sm-and-down">Center</span>
+                    <span class="hidden-sm-and-down"></span>
 
                     RON95
                   </v-btn>

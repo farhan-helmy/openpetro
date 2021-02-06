@@ -1,5 +1,5 @@
 <template>
-    <v-bottom-navigation v-model="value" :background-color="color" dark shift fixed >
+    <v-bottom-navigation v-model="value" :background-color="color" dark fixed >
       
       <v-btn to="/home">
         <span>Home</span>

@@ -1,7 +1,7 @@
 <template>
   <v-row align="center" class="spacer" justify="center" no-gutters>
     <v-col cols="4" sm="2" md="1">
-      <v-btn color="secondary" elevation="5" x-large @click="logoutAction"
+      <v-btn color="primary" elevation="5" x-large @click="logoutAction"
         >LOGOUT</v-btn
       >
     </v-col>

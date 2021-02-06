@@ -7,7 +7,8 @@ export default {
     state: {
         status: '',
         token: localStorage.getItem('token') || '',
-        payment: {}
+        payment: {},
+        topup: {}
     },
     mutations: paymentMutations,
     actions: paymentActions,

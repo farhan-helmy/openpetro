@@ -11,6 +11,13 @@ export default {
       payment_error(state){
         state.status = 'error'
       },
+      topup_request(state){
+        state.status = 'processing topup'
+      },
+      topup_latest(state, {topupamount}){
+        state.status ='done'
+        state.topup = topupamount
+      }
       // transaction_data(state, [datatransaction]){
       //   state.payment = datatransaction
       // }

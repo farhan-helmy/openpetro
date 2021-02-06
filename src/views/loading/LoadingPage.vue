@@ -21,7 +21,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import {mapGetters } from "vuex"
+import axios from "axios"
 const gradients = [
   ["#222"],
   ["#42b3f4"],
@@ -53,27 +54,54 @@ export default {
     },
   },
   mounted() {
-    this.timeOut()
-    
+    this.timeOut();
   },
   methods: {
     // ...mapActions("auth", ["getUsers"]),
-    ...mapActions("payment", ["updateBalance"]),
+    //...mapActions("payment", ["updateBalance"]),
     nextPage() {
       this.$router.push("invoiceview");
     },
     timeOut() {
-          let topup_balance = this.customerInfo.$numberDecimal - this.$route.query.fuel_amount
-          console.log({topup_balance})
-          this.updateBalance({topup_balance})
-          .then(() => setTimeout(() => {
-            this.nextPage();
-          }, 1000))
-          .catch(err => console.log(err))     
-       }
+      let topup_balance = this.customerInfo - this.$route.query.fuel_amount;
+      console.log({ topup_balance });
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "http://localhost:3000/customers/topup",
+          data: {topup_balance},
+          method: "PATCH",
+        })
+          .then((resp) => {
+            console.log(resp.data);
+            setTimeout(() => {
+              this.nextPage();
+            }, 1000);
+            resolve(resp);
+          })
+          .catch((err) => {
+            console.log(err.body);
+            reject(err);
+          });
+      });
+    },
   },
 };
 </script>
+
+
+ updateBalance(topbal){
+        return new Promise((resolve, reject) => {
+          axios({url: 'http://localhost:3000/customers/topup', data: topbal, method: 'PATCH'})
+          .then(resp => {
+            console.log(resp.data)
+            resolve(resp)
+          })
+          .catch(err => {
+            console.log(err.body)
+            reject(err)
+          })
+        })
+    }
 
 
 

@@ -9,6 +9,9 @@ import Invoice from './views/Invoice'
 import BuyFuelPage from './views/BuyFuelPage'
 import LoadingPage from './views/loading/LoadingPage'
 import InvoiceView from './views/InvoiceView'
+import TopupPage from './views/topup-up/TopupPage'
+import LoadingTopup from './views/topup-up/LoadingTopup'
+import SuccessTopup from './views/topup-up/SuccessTopup'
 
 
 Vue.use(Router)
@@ -26,7 +29,7 @@ let router = new Router({
     },
     {
       path: '/',
-      name: 'login',
+      name: 'logins',
       component: Login
     },
     {
@@ -42,32 +45,74 @@ let router = new Router({
     {
       path: '/topup',
       name: 'topup',
-      component: Topup
+      component: Topup,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/account',
       name: 'account',
-      component: Account
+      component: Account,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/invoice',
       name: 'invoice',
-      component: Invoice
+      component: Invoice,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/buyfuel',
       name: 'buyfuel',
-      component: BuyFuelPage
+      component: BuyFuelPage,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/loading',
       name: 'loading',
-      component: LoadingPage
+      component: LoadingPage,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/invoiceview',
       name: 'invoiceview',
-      component: InvoiceView
+      component: InvoiceView,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path:'/topuppage',
+      name: 'topuppage',
+      component: TopupPage,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path:'/loadingtopup',
+      name: 'loadingtopup',
+      component: LoadingTopup,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path:'/successtopup',
+      name: 'successtopup',
+      component: SuccessTopup,
+      meta:{
+        requiresAuth: true
+      }
     }
   ]
 })

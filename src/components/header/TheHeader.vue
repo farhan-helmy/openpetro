@@ -5,7 +5,7 @@
       color="primary"
       dark
     > <v-icon>mdi-cash-multiple</v-icon>
-      RM {{customerInfo.$numberDecimal}}
+      RM {{customerInfo}}
     </v-btn>
   </div>
 </template>
