@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import {mapGetters } from "vuex"
-import axios from "axios"
+import { mapGetters } from "vuex";
+import axios from "axios";
 const gradients = [
   ["#222"],
   ["#42b3f4"],
@@ -55,6 +55,7 @@ export default {
   },
   mounted() {
     this.timeOut();
+    this.iotPump();
   },
   methods: {
     // ...mapActions("auth", ["getUsers"]),
@@ -67,8 +68,8 @@ export default {
       console.log({ topup_balance });
       return new Promise((resolve, reject) => {
         axios({
-          url: "http://localhost:3000/customers/topup",
-          data: {topup_balance},
+          url: "http://192.168.0.139:3000/customers/topup",
+          data: { topup_balance },
           method: "PATCH",
         })
           .then((resp) => {
@@ -83,6 +84,11 @@ export default {
             reject(err);
           });
       });
+    },
+    iotPump() {
+      var req = new XMLHttpRequest();
+      req.open("GET", "http://192.168.0.248:5000/fuelpump/10", true);
+      req.send();
     },
   },
 };

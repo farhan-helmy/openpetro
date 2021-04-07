@@ -59,7 +59,7 @@ import axios from 'axios'
       fakeApiCall () {
         return new Promise((resolve, reject) => {
           const { sortBy, sortDesc, page, itemsPerPage } = this.options
-          axios.get('http://localhost:3000/transactions')
+          axios.get('http://192.168.0.139:3000/transactions')
           .then(resp => {
             let items = resp.data
             const total = items.length

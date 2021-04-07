@@ -4,7 +4,7 @@ export default {
     login({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios({url: 'http://localhost:3000/customers/login', data: user, method: 'POST' })
+          axios({url: 'http://192.168.0.139:3000/customers/login', data: user, method: 'POST' })
           .then(resp => {
             console.log(resp.data.customer)
             const token = resp.data.token
@@ -24,7 +24,7 @@ export default {
     register({commit}, user){
         return new Promise((resolve, reject) => {
           commit('auth_request')
-          axios({url: 'http://localhost:3000/customers/register', data: user, method: 'POST' })
+          axios({url: 'http://192.168.0.139:3000/customers/register', data: user, method: 'POST' })
           .then(resp => {
             const token = resp.data.token
             const customer = resp.data.customer
@@ -52,7 +52,7 @@ export default {
       getUsers({commit}){
         //let token = localStorage.getItem('token')
         return new Promise((resolve, reject) => {
-            axios.get('http://localhost:3000/customers/me')
+            axios.get('http://192.168.0.139:3000/customers/me')
             .then(resp => {
               console.log(resp.data)
               const datacustomer = resp.data

@@ -4,7 +4,7 @@ export default {
     pay({commit}, payment){
         return new Promise((resolve, reject) => {
           commit('payment_request')
-          axios({url: 'http://localhost:3000/transaction', data: payment, method: 'POST' })
+          axios({url: 'http://192.168.0.139:3000/transaction', data: payment, method: 'POST' })
           .then(resp => {
             console.log(resp.data)
             const transaction = resp.data
@@ -21,7 +21,7 @@ export default {
     topupWallet({commit}, topupamount){
       return new Promise((resolve, reject) => {
         commit('topup_request')
-        axios({url: 'http://localhost:3000/customers/topup', data: topupamount, method: 'PATCH' })
+        axios({url: 'http://192.168.0.139:3000/customers/topup', data: topupamount, method: 'PATCH' })
         .then(resp => {
           console.log(resp.data)
           //nama kena sama dengan mutations
