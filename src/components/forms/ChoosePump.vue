@@ -1,6 +1,9 @@
 <template>
   <div>
     <div>
+      <v-alert v-if="this.alert == true" type="warning">
+        INSUFFICIENT FUND
+      </v-alert>
       <v-sheet class="mx-auto" elevation="8" max-width="800">
         <v-slide-group v-model="pumpno" class="pa-4" show-arrows>
           <v-slide-item v-for="n in 15" :key="n" v-slot="{ active, toggle }">
@@ -30,39 +33,40 @@
           <v-sheet v-if="pumpno != null" height="300" tile>
             <v-row class="fill-height" align="center" justify="center">
               <v-col cols="10" class="py-2">
-                <p>AMOUNT (RM)</p>
+                <p>AMOUNT (l)</p>
                 <v-slide-group>
                   <v-btn-toggle v-model="amount" borderless>
-                    <v-btn value="20"> RM 20 </v-btn>
+                    <v-btn value="20"> 20 l <label for=""></label> </v-btn>
 
                     <v-btn value="40">
                       <span class="hidden-sm-and-down"></span>
 
-                      RM 40
+                      40 l
                     </v-btn>
 
                     <v-btn value="60">
                       <span class="hidden-sm-and-down"></span>
 
-                      RM 60
+                      60 l
                     </v-btn>
 
                     <v-btn value="80">
                       <span class="hidden-sm-and-down"></span>
 
-                      RM 80
+                      80 l
                     </v-btn>
                     <v-btn value="100">
                       <span class="hidden-sm-and-down"></span>
 
-                      RM 100
+                      100 l
                     </v-btn>
                   </v-btn-toggle>
                 </v-slide-group>
+                <v-text-field v-model="amount_keyin" label="Enter amount?">
+                </v-text-field>
               </v-col>
               <v-col cols="10" class="py-2">
                 <p>Fuel Type</p>
-
                 <v-btn-toggle v-model="fueltype" borderless>
                   <v-btn value="RON97" color="green"> RON97 </v-btn>
 
@@ -88,7 +92,7 @@
       <v-footer color="primary lighten-1" app>
         <v-row justify="center" no-gutters>
           <v-btn x-large color="primary" dark @click="goPay">
-            PAY . RM {{ this.amount }}
+            PAY . FOR {{ this.amount }} l
           </v-btn>
         </v-row>
       </v-footer>
@@ -97,29 +101,99 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
+import axios from "axios";
 export default {
   data: () => ({
     pumpno: null,
     text: "center",
     amount: "",
+    amount_keyin: "",
     toggle_none: null,
     toggle_one: 0,
     toggle_exclusive: 1,
     toggle_multiple: [0, 1, 2],
     fueltype: "",
+    alert: false,
   }),
+  computed: {
+    ...mapGetters("auth", ["customerdata"]),
+    customerInfo() {
+      return this.customerdata.topup_balance;
+    },
+  },
+  mounted() {
+    this.getFuelPrice();
+  },
   methods: {
-    ...mapActions('payment',[
-      'pay'
-    ]),
+    ...mapActions("payment", ["pay"]),
     goPay() {
-      let fuel_pump_no = this.pumpno + 1
-      let fuel_amount = this.amount
-      let fuel_type = this.fueltype
-      this.pay({fuel_pump_no,fuel_amount,fuel_type})
-      .then(() => this.$router.push({ path: 'loading', query: { fuel_amount: this.amount }}))
-      .catch(err => console.log(err))
+      console.log(this.amount_keyin);
+      this.getFuelPrice().then((fuel_price_true) => {
+        if (this.amount !== "") {
+          let topup_balance = this.customerInfo - (this.amount * fuel_price_true);
+          if (topup_balance > this.customerInfo) {
+            this.alert = true;
+          } else {
+            let fuel_pump_no = this.pumpno + 1;
+            let fuel_amount = this.amount;
+            let true_amount = fuel_price_true * this.amount;
+            console.log("hey ni harga betui" + fuel_price_true);
+            let fuel_type = this.fueltype;
+            this.pay({ fuel_pump_no, fuel_amount, fuel_type })
+              .then(() =>
+                this.$router.push({
+                  path: "loading",
+                  query: { fuel_amount: true_amount },
+                })
+              )
+              .catch((err) => console.log(err));
+          }
+        } else{
+          let topup_balance = this.customerInfo - (this.amount_keyin * fuel_price_true);
+
+          console.log("topup bal" + topup_balance)
+          if (topup_balance > this.customerInfo) {
+            this.alert = true;
+          } else {
+            let fuel_pump_no = this.pumpno + 1;
+            let fuel_amount = this.amount_keyin;
+            let true_amount = fuel_price_true * this.amount_keyin;
+            console.log("this is true amount" + true_amount)
+            console.log("hey ni harga betui" + fuel_price_true);
+            let fuel_type = this.fueltype;
+            this.pay({ fuel_pump_no, fuel_amount, fuel_type })
+              .then(() =>
+                this.$router.push({
+                  path: "loading",
+                  query: { fuel_amount: true_amount },
+                })
+              )
+              .catch((err) => console.log(err));
+          }
+        }
+      });
+    },
+    getFuelPrice() {
+      var utc = new Date().toJSON().slice(0, 10);
+      console.log(utc);
+      return new Promise((resolve, reject) => {
+        axios({
+          url: "http://hargaminyak.test/hargaminyak/" + utc,
+          method: "GET",
+        })
+          .then((resp) => {
+            var fuel_price = resp.data[0].ron95;
+            var real = fuel_price.split("RM");
+            var fuel_price_true = real[1];
+            console.log(fuel_price_true);
+            resolve(fuel_price_true);
+          })
+          .catch((err) => {
+            console.log(err.body);
+            reject(err);
+          });
+      });
     },
   },
 };

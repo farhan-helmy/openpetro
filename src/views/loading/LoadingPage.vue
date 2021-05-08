@@ -17,6 +17,7 @@
     </div>
     <div><v-text-field color="success" loading disabled></v-text-field></div>
     <div><h1 class="text-center">Loading ...</h1></div>
+   
   </div>
 </template>
 
@@ -45,6 +46,7 @@ export default {
     fill: false,
     type: "trend",
     autoLineWidth: false,
+    
     // balance: this.customerInfo.$numberDecimal
   }),
   computed: {
@@ -66,6 +68,10 @@ export default {
     timeOut() {
       let topup_balance = this.customerInfo - this.$route.query.fuel_amount;
       console.log({ topup_balance });
+      console.log(this.$route.query.fuel_amount);
+      if(topup_balance < this.customerInfo){
+        this.alert = true
+      }
       return new Promise((resolve, reject) => {
         axios({
           url: "http://192.168.0.139:3000/customers/topup",
@@ -76,7 +82,7 @@ export default {
             console.log(resp.data);
             setTimeout(() => {
               this.nextPage();
-            }, 1000);
+            }, 3000);
             resolve(resp);
           })
           .catch((err) => {
