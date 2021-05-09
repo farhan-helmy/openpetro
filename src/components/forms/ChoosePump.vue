@@ -92,7 +92,7 @@
       <v-footer color="primary lighten-1" app>
         <v-row justify="center" no-gutters>
           <v-btn x-large color="primary" dark @click="goPay">
-            PAY . FOR {{ this.amount }} l
+            PAY . RM {{ this.true_amount }} 
           </v-btn>
         </v-row>
       </v-footer>
@@ -105,6 +105,7 @@ import { mapActions, mapGetters } from "vuex";
 import axios from "axios";
 export default {
   data: () => ({
+    true_amount: "",
     pumpno: null,
     text: "center",
     amount: "",
@@ -121,6 +122,18 @@ export default {
     customerInfo() {
       return this.customerdata.topup_balance;
     },
+  },
+  watch:{
+    amount: function(){
+      this.getFuelPrice().then((fuel_price_true) => {
+        this.true_amount = this.amount * fuel_price_true
+      })
+    },
+     amount_keyin: function(){
+      this.getFuelPrice().then((fuel_price_true) => {
+        this.true_amount = this.amount_keyin * fuel_price_true
+      })
+    }
   },
   mounted() {
     this.getFuelPrice();
@@ -144,7 +157,7 @@ export default {
               .then(() =>
                 this.$router.push({
                   path: "loading",
-                  query: { fuel_amount: true_amount },
+                  query: { fuel_amount: true_amount, fuel_litre: fuel_amount },
                 })
               )
               .catch((err) => console.log(err));
@@ -159,6 +172,7 @@ export default {
             let fuel_pump_no = this.pumpno + 1;
             let fuel_amount = this.amount_keyin;
             let true_amount = fuel_price_true * this.amount_keyin;
+            this.true_amount = true_amount
             console.log("this is true amount" + true_amount)
             console.log("hey ni harga betui" + fuel_price_true);
             let fuel_type = this.fueltype;
@@ -166,7 +180,7 @@ export default {
               .then(() =>
                 this.$router.push({
                   path: "loading",
-                  query: { fuel_amount: true_amount },
+                  query: { fuel_amount: true_amount, fuel_litre: fuel_amount },
                 })
               )
               .catch((err) => console.log(err));
@@ -179,7 +193,7 @@ export default {
       console.log(utc);
       return new Promise((resolve, reject) => {
         axios({
-          url: "http://hargaminyak.test/hargaminyak/" + utc,
+          url: "http://hargaminyak.test/hargaminyak/"+utc,
           method: "GET",
         })
           .then((resp) => {

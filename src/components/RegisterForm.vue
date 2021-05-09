@@ -2,7 +2,7 @@
   <v-main>
     <v-row justify="center">
       <v-col cols="12" sm="10" md="8" lg="6">
-      <round-icon></round-icon>
+        <round-icon></round-icon>
         <v-card
           ref="form"
           class="mx-auto"
@@ -11,10 +11,12 @@
           max-width="400"
           elevation="7"
         >
-         <v-card-title>
-          <v-icon color="black">mdi-account</v-icon>
-          <span class="title font-weight-bold text--primary">Register Here</span>
-        </v-card-title>
+          <v-card-title>
+            <v-icon color="black">mdi-account</v-icon>
+            <span class="title font-weight-bold text--primary"
+              >Register Here</span
+            >
+          </v-card-title>
           <v-card-text>
             <v-text-field
               ref="name"
@@ -35,6 +37,18 @@
               required
             ></v-text-field>
             <v-text-field
+              v-model="icno"
+              label="Icno"
+              prepend-icon="mdi-account-box-outline"
+              hint=""
+            />
+            <v-text-field
+              v-model="age"
+              label="Age"
+              prepend-icon="mdi-airplane-takeoff"
+              hint="test@email.com"
+            />
+            <v-text-field
               ref="password"
               v-model="password"
               :rules="[() => !!password || 'This field is required']"
@@ -46,16 +60,15 @@
             ></v-text-field>
 
             <v-row justify="center">
-              <v-btn color="" @click="submit"> Sign UP </v-btn>
+              <v-btn color="" @click="registerAction"> Sign UP </v-btn>
             </v-row>
             <v-spacer></v-spacer>
             <v-row justify="center">
-            <router-link to="/login">BACK</router-link>
+              <router-link to="/login">BACK</router-link>
             </v-row>
           </v-card-text>
           <v-divider class="mt-12"></v-divider>
           <v-card-actions>
-            
             <v-spacer></v-spacer>
             <v-slide-x-reverse-transition>
               <v-tooltip v-if="formHasErrors" left>
@@ -82,16 +95,20 @@
 
 <script>
 import RoundIcon from "./animation/Round";
-import Auth from "@/services/Auth";
+//import Auth from "@/services/Auth";
+import { mapActions } from "vuex";
 export default {
   components: {
     RoundIcon,
   },
   data: () => ({
     errorMessages: "",
-    name: null,
-    email: null,
-    password: null,
+    email: "",
+    password: "",
+    name: "",
+    icno: "",
+    age: "",
+    topup_balance: "0",
     formHasErrors: false,
   }),
 
@@ -112,6 +129,9 @@ export default {
   },
 
   methods: {
+    ...mapActions("auth", [
+      "register", //also supports payload `this.nameOfAction(amount)`
+    ]),
     resetForm() {
       this.errorMessages = [];
       this.formHasErrors = false;
@@ -120,10 +140,17 @@ export default {
         this.$refs[f].reset();
       });
     },
-    async submit() {
-      const formData = new FormData()
-      formData.append('')
-        Auth.register      
+    registerAction() {
+      let age = this.age;
+      let icno = this.icno;
+      let name = this.name;
+      let email = this.email;
+      let password = this.password;
+      let topup_balance = this.topup_balance
+      console.log({ email, password });
+      this.register({ email, password, name, age, icno, topup_balance })
+        .then(() => this.$router.push("/home"))
+        .catch((err) => console.log(err));
     },
   },
 };

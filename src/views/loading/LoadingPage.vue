@@ -93,27 +93,13 @@ export default {
     },
     iotPump() {
       var req = new XMLHttpRequest();
-      req.open("GET", "http://192.168.0.248:5000/fuelpump/10", true);
+      req.open("GET", "http://192.168.0.248:5000/fuelpump/"+this.$route.query.fuel_litre , true);
       req.send();
     },
   },
 };
 </script>
 
-
- updateBalance(topbal){
-        return new Promise((resolve, reject) => {
-          axios({url: 'http://localhost:3000/customers/topup', data: topbal, method: 'PATCH'})
-          .then(resp => {
-            console.log(resp.data)
-            resolve(resp)
-          })
-          .catch(err => {
-            console.log(err.body)
-            reject(err)
-          })
-        })
-    }
 
 
 

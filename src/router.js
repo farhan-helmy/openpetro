@@ -9,9 +9,11 @@ import Invoice from './views/Invoice'
 import BuyFuelPage from './views/BuyFuelPage'
 import LoadingPage from './views/loading/LoadingPage'
 import InvoiceView from './views/InvoiceView'
+import Feedback from './views/Feedback'
 import TopupPage from './views/topup-up/TopupPage'
 import LoadingTopup from './views/topup-up/LoadingTopup'
 import SuccessTopup from './views/topup-up/SuccessTopup'
+import Thankyou from './views/loading/Thankyou'
 
 
 Vue.use(Router)
@@ -110,6 +112,22 @@ let router = new Router({
       path:'/successtopup',
       name: 'successtopup',
       component: SuccessTopup,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path:'/feedback',
+      name: 'feedback',
+      component: Feedback,
+      meta:{
+        requiresAuth: true
+      }
+    },
+    {
+      path:'/thankyou',
+      name: 'thankyou',
+      component: Thankyou,
       meta:{
         requiresAuth: true
       }
